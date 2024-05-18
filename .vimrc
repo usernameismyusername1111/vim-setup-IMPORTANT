@@ -335,3 +335,30 @@ let g:user_emmet_settings = {
 \    },
 \  },
 \}
+" Vim-visual-multi settings
+let g:VM_mouse_mappings = 1
+let g:VM_theme = 'iceblue'
+let g:VM_maps = {}
+let g:VM_maps['Undo'] = 'u'
+let g:VM_maps['Redo'] = '<C-r>'
+let g:VM_leader = '//'
+if exists('g:VM_maps')
+  let g:VM_maps['i'] = {}
+  let g:VM_maps['i']['jj'] = '<Esc>'
+endif
+" Map `;` to `:` in normal and visual mode
+nnoremap ; :
+vnoremap ; :
+
+" Map `,p` and `,P` to paste from register 0 in normal mode
+nmap ,p "0p
+nmap ,P "0P
+
+" Surround word under cursor with backticks
+nmap <leader>` ysiw`
+
+" Move between vim windows
+nnoremap <Up> <C-w><Up>
+nnoremap <Down> <C-w><Down>
+nnoremap <Right> <C-w><Right>
+nnoremap <Left> <C-w><Left>
