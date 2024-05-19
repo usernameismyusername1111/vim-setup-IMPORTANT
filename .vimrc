@@ -21,7 +21,6 @@ set expandtab
 set smartindent
 set nu
 set nowrap
-set nobackup
 set undodir=~/.vim/undordir
 set undofile
 set incsearch
@@ -46,12 +45,37 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 " Comment and uncomment lines
 Plug 'preservim/nerdcommenter'
 
-" A light and configurable statusline/tabline plugin for Vim
-Plug 'itchyny/lightline.vim'
-
 " Directory tree
-Plug 'scrooloose/nerdtree'
+"Plug 'scrooloose/nerdtree'
+" A light and configurable statusline/tabline plugin for Vim
 
+Plug 'preservim/nerdtree' |
+            \ Plug 'Xuyuanp/nerdtree-git-plugin' " |
+            "\ Plug 'ryanoasis/vim-devicons'
+
+" NeoBundle 'tiagofumo/vim-nerdtree-syntax-highlight'
+" let g:WebDevIconsDisableDefaultFolderSymbolColorFromNERDTreeDir = 1
+" let g:WebDevIconsDisableDefaultFileSymbolColorFromNERDTreeFile = 1
+" let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
+" let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
+
+"let g:NERDTreeLimitedSyntax = 1 " if you experience lag scrolling, activate this one
+set nobackup
+
+
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+                \ 'Modified'  :'✹',
+                \ 'Staged'    :'✚',
+                \ 'Untracked' :'✭',
+                \ 'Renamed'   :'➜',
+                \ 'Unmerged'  :'═',
+                \ 'Deleted'   :'✖',
+                \ 'Dirty'     :'✗',
+                \ 'Ignored'   :'☒',
+                \ 'Clean'     :'✔︎',
+                \ 'Unknown'   :'?',
+                \ }
+Plug 'itchyny/lightline.vim'
 " Visualize undo history tree (in vim undo is not linear)
 Plug 'mbbill/undotree'
 
@@ -78,9 +102,7 @@ Plug 'dense-analysis/ale'
 
 Plug 'mattn/emmet-vim'
 
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-
-
+Plug 'mg979/vim-visual-multi'
 
 call plug#end()
 
@@ -91,12 +113,28 @@ nmap <leader>hk :vsplit ~/.vim/hotkeys<cr>
 nmap <leader>gd <Plug>(coc-definition)
 nmap <leader>gr <Plug>(coc-references)
 nmap <leader>t :NERDTree<cr>
+"nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
 nmap <leader><leader>p :Prettier<cr>
 nmap <leader><leader>g :GoFmt<cr>
 nmap <leader><leader>b :Black<cr>
 nmap <leader><leader>u :UndotreeToggle<cr>
 " Files (runs $FZF_DEFAULT_COMMAND if defined)
 nmap <leader><leader>f :Files<cr>
+" Function to send 'jj' as <Esc> to exit FZF
+function! ExitFzfWithJj() abort
+  let temp_file = tempname()
+  execute 'write! ' . temp_file
+  execute 'silent !echo q > ' . temp_file
+  execute 'source ' . temp_file
+  execute 'delete! ' . temp_file
+endfunction
+
+" Mapping 'jj' in FZF window to exit
+autocmd FileType fzf tnoremap <buffer> jj <C-c>:call ExitFzfWithJj()<CR>
+
+filetype plugin indent on
 nmap <leader><leader><leader>g :GoMetaLinter<cr>
 nnoremap <C-p> :GFiles<CR>
 nnoremap <leader><leader>c :call NERDComment(0,"toggle")<CR>
@@ -143,11 +181,11 @@ endif
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -335,13 +373,20 @@ let g:user_emmet_settings = {
 \    },
 \  },
 \}
-" Vim-visual-multi settings
 let g:VM_mouse_mappings = 1
 let g:VM_theme = 'iceblue'
 let g:VM_maps = {}
 let g:VM_maps['Undo'] = 'u'
 let g:VM_maps['Redo'] = '<C-r>'
-let g:VM_leader = '//'
+" let g:VM_leader = '//'
+" let g:VM_maps['Find Under'] = '<C-m>'
+" let g:VM_maps['Find Subword Under'] = '<C-m>'
+" let g:VM_maps['Add Cursor Down'] = '<C-j>'
+" let g:VM_maps['Add Cursor Up'] = '<C-k>'
+" let g:VM_maps['Skip Region'] = '<C-x>'
+" let g:VM_maps['Remove Region'] = '<C-p>'
+
+" Vim-visual-multi settings
 if exists('g:VM_maps')
   let g:VM_maps['i'] = {}
   let g:VM_maps['i']['jj'] = '<Esc>'
@@ -362,3 +407,6 @@ nnoremap <Up> <C-w><Up>
 nnoremap <Down> <C-w><Down>
 nnoremap <Right> <C-w><Right>
 nnoremap <Left> <C-w><Left>
+" There're some plugins that you might want to consider in the future
+" preservim / tagbar => show all the classes in a file in a nerdtree-like layout
+" on the right
