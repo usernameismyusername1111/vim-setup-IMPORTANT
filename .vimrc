@@ -7,6 +7,7 @@ syntax on
 " Set FZF Default to Ripgrep (must install ripgrep)
 let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --no-ignore-vcs'
 
+
 " Options viewable by using :options
 " Set options viewable by using :set all
 " Or help for individual configs can be accessed :help <name>
@@ -327,7 +328,7 @@ let g:prettier#config#print_width = 100 " default is 'auto'
 " autocmd vimenter * ++nested colorscheme gruvbox
 colorscheme vim-monokai-tasty
 
-" ======================= my custom settings ========================
+"" ======================= my custom settings ========================
 " Move visually selected lines up or down in various modes.
 nnoremap K :m .-2<CR>==
 nnoremap J :m .+1<CR>==
@@ -335,9 +336,9 @@ vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
 " In ~/.vim/vimrc, or somewhere similar.
 let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint'],
-\}
+"\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+"\   'javascript': ['eslint'],
+"\}
 
 " Set this variable to 1 to fix files when you save them.
 let g:ale_fix_on_save = 1
@@ -354,43 +355,36 @@ nmap ]c <Plug>(GitGutterNextHunk)
 nmap [c <Plug>(GitGutterPrevHunk)
 let g:user_emmet_leader_key=','
 let g:user_emmet_settings = {
-\  'variables': {'lang': 'en'},
-\  'html': {
-\    'default_attributes': {
-\      'option': {'value': v:null},
-\      'textarea': {'id': v:null, 'name': v:null, 'cols': 10, 'rows': 10},
-\    },
-\    'snippets': {
-\      'html:5': "<!DOCTYPE html>\n"
-\              ."<html lang=\"${lang}\">\n"
-\              ."<head>\n"
-\              ."\t<meta charset=\"${charset}\">\n"
-\              ."\t<title></title>\n"
-\              ."\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
-\              ."</head>\n"
-\              ."<body>\n\t${child}|\n</body>\n"
-\              ."</html>",
-\    },
-\  },
-\}
+"\  'variables': {'lang': 'en'},
+"\  'html': {
+"\    'default_attributes': {
+"\      'option': {'value': v:null},
+"\      'textarea': {'id': v:null, 'name': v:null, 'cols': 10, 'rows': 10},
+"\    },
+"\    'snippets': {
+"\      'html:5': "<!DOCTYPE html>\n"
+"\              ."<html lang=\"${lang}\">\n"
+"\              ."<head>\n"
+"\              ."\t<meta charset=\"${charset}\">\n"
+"\              ."\t<title></title>\n"
+"\              ."\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+"\              ."</head>\n"
+"\              ."<body>\n\t${child}|\n</body>\n"
+"\              ."</html>",
+"\    },
+"\  },
+"\}
 let g:VM_mouse_mappings = 1
 let g:VM_theme = 'iceblue'
 let g:VM_maps = {}
 let g:VM_maps['Undo'] = 'u'
 let g:VM_maps['Redo'] = '<C-r>'
-" let g:VM_leader = '//'
-" let g:VM_maps['Find Under'] = '<C-m>'
-" let g:VM_maps['Find Subword Under'] = '<C-m>'
-" let g:VM_maps['Add Cursor Down'] = '<C-j>'
-" let g:VM_maps['Add Cursor Up'] = '<C-k>'
-" let g:VM_maps['Skip Region'] = '<C-x>'
-" let g:VM_maps['Remove Region'] = '<C-p>'
-
-" Vim-visual-multi settings
-if exists('g:VM_maps')
-  let g:VM_maps['i'] = {}
-  let g:VM_maps['i']['jj'] = '<Esc>'
-endif
+" this setting that exits insert mode in VM mode is what caused problems
+" " Vim-visual-multi settings
+"  if exists('g:VM_maps')
+"    let g:VM_maps['i'] = {}
+"    let g:VM_maps['i']['jj'] = '<Esc>'
+"  endif
 " Map `;` to `:` in normal and visual mode
 nnoremap ; :
 vnoremap ; :
@@ -399,8 +393,8 @@ vnoremap ; :
 nmap ,p "0p
 nmap ,P "0P
 
-" Surround word under cursor with backticks
-nmap <leader>` ysiw`
+" "" Surround word under cursor with backticks
+ nmap <leader>` ysiw`
 
 " Move between vim windows
 nnoremap <Up> <C-w><Up>
