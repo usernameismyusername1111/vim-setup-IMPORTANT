@@ -52,16 +52,14 @@ Plug 'preservim/nerdcommenter'
 
 Plug 'preservim/nerdtree' |
             \ Plug 'Xuyuanp/nerdtree-git-plugin' " |
-            "\ Plug 'ryanoasis/vim-devicons'
+ " NeoBundle 'tiagofumo/vim-nerdtree-syntax-highlight'
+ " let g:WebDevIconsDisableDefaultFolderSymbolColorFromNERDTreeDir = 1
+ " let g:WebDevIconsDisableDefaultFileSymbolColorFromNERDTreeFile = 1
+ " let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
+ " let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
 
-" NeoBundle 'tiagofumo/vim-nerdtree-syntax-highlight'
-" let g:WebDevIconsDisableDefaultFolderSymbolColorFromNERDTreeDir = 1
-" let g:WebDevIconsDisableDefaultFileSymbolColorFromNERDTreeFile = 1
-" let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
-" let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
-
-"let g:NERDTreeLimitedSyntax = 1 " if you experience lag scrolling, activate this one
-set nobackup
+ " let g:NERDTreeLimitedSyntax = 1 " if you experience lag scrolling, activate this one
+ set nobackup
 
 
 let g:NERDTreeGitStatusIndicatorMapCustom = {
@@ -105,7 +103,12 @@ Plug 'mattn/emmet-vim'
 
 Plug 'mg979/vim-visual-multi'
 
+" If you have nodejs
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+
 call plug#end()
+
+nmap <F5>  <Plug>MarkdownPreviewToggle
 
 " Set mapleader to space
 let mapleader = " "
@@ -143,7 +146,7 @@ vnoremap <leader><leader>c :call NERDComment(0,"toggle")<CR>
 nnoremap <leader><Tab> :bnext<CR>
 nnoremap <leader><Tab><Tab> :bprevious<CR>
 nnoremap <leader>q :bd<CR>
-nnoremap <leader>w :w<CR>
+nnoremap <leader>w :up<CR>
 nnoremap gt :tabnext<CR>
 nnoremap gT :tabprev<CR>
 nnoremap t :tabnew<CR>
@@ -336,11 +339,9 @@ vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
 " In ~/.vim/vimrc, or somewhere similar.
 let g:ale_fixers = {
-"\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-"\   'javascript': ['eslint'],
-"\}
-
-" Set this variable to 1 to fix files when you save them.
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\}" Set this variable to 1 to fix files when you save them.
 let g:ale_fix_on_save = 1
 
 " Enable completion where available.
@@ -375,16 +376,19 @@ let g:user_emmet_settings = {
 "\  },
 "\}
 let g:VM_mouse_mappings = 1
-let g:VM_theme = 'iceblue'
-let g:VM_maps = {}
-let g:VM_maps['Undo'] = 'u'
-let g:VM_maps['Redo'] = '<C-r>'
+let g:VM_theme          = 'iceblue'
+let g:VM_maps           = {}
+let g:VM_maps['Undo']   = 'u'
+let g:VM_maps['Redo']   = '<C-r>'
+
 " this setting that exits insert mode in VM mode is what caused problems
 " " Vim-visual-multi settings
 "  if exists('g:VM_maps')
 "    let g:VM_maps['i'] = {}
 "    let g:VM_maps['i']['jj'] = '<Esc>'
 "  endif
+
+" suggested improvements and tips
 " Map `;` to `:` in normal and visual mode
 nnoremap ; :
 vnoremap ; :
@@ -401,6 +405,10 @@ nnoremap <Up> <C-w><Up>
 nnoremap <Down> <C-w><Down>
 nnoremap <Right> <C-w><Right>
 nnoremap <Left> <C-w><Left>
+
+" you can check all the mappings using the :nmap command
+
+
 " There're some plugins that you might want to consider in the future
 " preservim / tagbar => show all the classes in a file in a nerdtree-like layout
 " on the right
