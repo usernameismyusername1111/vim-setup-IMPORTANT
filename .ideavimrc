@@ -1,0 +1,30 @@
+imap jj <Esc>
+set timeoutlen=1000
+
+" Set mapleader to space
+let mapleader = " "
+
+set surround
+"vmap s S
+
+set NERDTree
+let g:NerDTreeMapActivateNode='l'
+let g:NerDTreeMapJumpParent='h'
+
+" suggested improvements and tips
+" Map `;` to `:` in normal and visual mode
+nnoremap ; :
+vnoremap ; :
+
+" Define a custom command to format the file
+command! -nargs=0 FormatFile :normal ggVG=
+" Map the leader key followed by 'p' to the custom command
+nmap <Leader>p :FormatFile<CR>
+
+
+
+
+nnoremap <leader>w :w<CR>:FormatFile<CR>
+nnoremap t :e<CR>
+nnoremap <leader>q :bd<CR>
+nnoremap <Leader>t :action ProjectView.ToggleView<CR>

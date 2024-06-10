@@ -14,7 +14,6 @@ let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --no-ignore-vcs'
 set nocompatible
 set redrawtime=10000
 set background=dark
-set laststatus=2
 set noerrorbells
 set tabstop=2 softtabstop=2
 set shiftwidth=2
@@ -52,7 +51,7 @@ Plug 'preservim/nerdcommenter'
 
 Plug 'preservim/nerdtree' |
             \ Plug 'Xuyuanp/nerdtree-git-plugin' " |
- " NeoBundle 'tiagofumo/vim-nerdtree-syntax-highlight'
+" NeoBundle 'tiagofumo/vim-nerdtree-syntax-highlight'
  " let g:WebDevIconsDisableDefaultFolderSymbolColorFromNERDTreeDir = 1
  " let g:WebDevIconsDisableDefaultFileSymbolColorFromNERDTreeFile = 1
  " let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
@@ -63,6 +62,7 @@ Plug 'preservim/nerdtree' |
 
 
 let g:NERDTreeGitStatusIndicatorMapCustom = {
+  set laststatus=2
                 \ 'Modified'  :'✹',
                 \ 'Staged'    :'✚',
                 \ 'Untracked' :'✭',
@@ -106,6 +106,15 @@ Plug 'mg979/vim-visual-multi'
 " If you have nodejs
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 
+" Plug 'puremourning/vimspector'   " Debugging plugin
+Plug 'mhinz/vim-startify'        " Optional: Start screen and session management
+
+Plug 'tpope/vim-sensible'            " Basic sensible defaults
+
+Plug 'tpope/vim-fugitive'
+
+"Plug 'Valloric/YouCompleteMe'        " Code completion
+
 call plug#end()
 
 nmap <F5>  <Plug>MarkdownPreviewToggle
@@ -146,7 +155,7 @@ vnoremap <leader><leader>c :call NERDComment(0,"toggle")<CR>
 nnoremap <leader><Tab> :bnext<CR>
 nnoremap <leader><Tab><Tab> :bprevious<CR>
 nnoremap <leader>q :bd<CR>
-nnoremap <leader>w :up<CR>
+nnoremap <leader>w :up<CR>:Prettier<CR>
 nnoremap gt :tabnext<CR>
 nnoremap gT :tabprev<CR>
 nnoremap t :tabnew<CR>
@@ -344,9 +353,24 @@ let g:ale_fixers = {
 \}" Set this variable to 1 to fix files when you save them.
 let g:ale_fix_on_save = 1
 
+" ALE linting
+let g:ale_linters = {
+\   'java': ['javac']
+\}
+" " YouCompleteMe
+" let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+
 " Enable completion where available.
+" you could add this to the .ycm_extra_conf.py which is in your home directory
+" and its configuration will be recognized by this setting in the vimrc file:
+" def Settings( **kwargs ):
+    " return {
+    "     'flags': [ '-x', 'java', '-classpath', '/path/to/your/classes' ]
+    " }
+
 " This setting must be set before ALE is loaded.
-"
+" Auto Pairs
+let g:auto_pairs = { '(':')', '{':'}', '[':']', "'":"'", '"':'"' }
 " You should not turn this setting on if you wish to use ALE as a completion
 " source for other completion plugins, like Deoplete.
 let g:ale_completion_enabled = 1
@@ -356,25 +380,26 @@ nmap ]c <Plug>(GitGutterNextHunk)
 nmap [c <Plug>(GitGutterPrevHunk)
 let g:user_emmet_leader_key=','
 let g:user_emmet_settings = {
-"\  'variables': {'lang': 'en'},
-"\  'html': {
-"\    'default_attributes': {
-"\      'option': {'value': v:null},
-"\      'textarea': {'id': v:null, 'name': v:null, 'cols': 10, 'rows': 10},
-"\    },
-"\    'snippets': {
-"\      'html:5': "<!DOCTYPE html>\n"
-"\              ."<html lang=\"${lang}\">\n"
-"\              ."<head>\n"
-"\              ."\t<meta charset=\"${charset}\">\n"
-"\              ."\t<title></title>\n"
-"\              ."\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
-"\              ."</head>\n"
-"\              ."<body>\n\t${child}|\n</body>\n"
-"\              ."</html>",
-"\    },
-"\  },
-"\}
+\  'variables': {'lang': 'en'},
+\  'html': {
+\    'default_attributes': {
+\      'option': {'value': v:null},
+\      'textarea': {'id': v:null, 'name': v:null, 'cols': 10, 'rows': 10},
+\    },
+\    'snippets': {
+\      'html:5': "<!DOCTYPE html>\n"
+\              ."<html lang=\"${lang}\">\n"
+\              ."<head>\n"
+\              ."\t<meta charset=\"${charset}\">\n"
+\              ."\t<title></title>\n"
+\              ."\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+\              ."</head>\n"
+\              ."<body>\n\t${child}|\n</body>\n"
+\              ."</html>",
+\    },
+\  },
+\}
+
 let g:VM_mouse_mappings = 1
 let g:VM_theme          = 'iceblue'
 let g:VM_maps           = {}
@@ -412,3 +437,34 @@ nnoremap <Left> <C-w><Left>
 " There're some plugins that you might want to consider in the future
 " preservim / tagbar => show all the classes in a file in a nerdtree-like layout
 " on the right
+let g:vimspector_enable_mappings = 'HUMAN'
+" in the root directory of your project Create a .vimspector.json configuration file in your project root directory:
+"{
+" "configurations": {
+"   "launch": {
+"     "adapter": "vscode-node",
+"     "configuration": {
+"       "request": "launch",
+"       "program": "${workspaceRoot}/app.js", // Replace this with your entry
+"       file
+"       "stopOnEntry": false,
+"       "args": [],
+"       "cwd": "${workspaceRoot}",
+"       "preLaunchTask": "",
+"       "runtimeExecutable": null,
+"       "runtimeArgs": ["--nolazy"],
+"       "env": {
+"         "NODE_ENV": "development"
+"       },
+"       "console": "integratedTerminal",
+"       "internalConsoleOptions": "neverOpen"
+"     }
+"   }
+" }
+"}
+"open the file you wanna open in vim and then Run this command: :call vimspector#Launch() , You
+"could also ask for help using this command: :help vimspector-mappings
+"Alternativly, you could use the built-in tool using this command:
+"node --inspect-brk app.js  # Replace with your entry file, although it's not
+"as good and you can also use ChromeDevTools
+"vmap s S
