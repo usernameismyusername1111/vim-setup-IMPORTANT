@@ -5,3 +5,4 @@ Whenever you set up Vim, Do the following:
 4. add .vimrc, .vim/ directory on my github repo in the home directory
 5. clone coc from github repo
 6. open Vim and Run :PlugInstall
+7. Install the ale from github
