@@ -1023,14 +1023,3 @@ keymap("n", ",P", '"0P', opts)
 
 -- Wrap selected word with backticks
 keymap("n", "<leader>`", "ysiw`", opts)
--- Explicit keybindings for clipboard
-local keymap = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
-
--- Copy to system clipboard
-keymap("v", "<leader>y", '"+y', opts) -- Visual mode yank
-keymap("n", "<leader>Y", '"+Y', opts) -- Yank entire line
-
--- Paste from system clipboard
-keymap("n", "<leader>p", '"+p', opts) -- Normal mode paste
-keymap("v", "<leader>p", '"+p', opts) -- Visual mode paste
