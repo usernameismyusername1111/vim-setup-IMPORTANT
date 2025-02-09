@@ -3,6 +3,30 @@
         If you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
 
 --]]
+-- my own keybindings
+
+local keymap = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+
+keymap('i', 'jj', '<Esc>', opts)
+keymap('n', '<leader>hk', ':vsplit ~/.vim/hotkeys<CR>', opts)
+keymap('n', '<leader><leader>u', ':UndotreeToggle<CR>', opts)
+keymap('n', 'gt', ':tabnext<CR>', opts)
+keymap('n', 'gT', ':tabprev<CR>', opts)
+keymap('n', 't', ':tabnew<CR>', opts)
+keymap('v', 'K', ":m '<-2<CR>gv=gv", opts)
+keymap('v', 'J', ":m '>+1<CR>gv=gv", opts)
+keymap('n', ';', ':', { noremap = true })
+keymap('v', ';', ':', { noremap = true })
+
+--[[
+-- things I wanna change:
+-- TODO: understand all different details of lazy.nvim
+-- TODO: look for all possible telescope settings 
+-- TODO: make my own configs for the lsp servers and tools
+-- TODO: plugins I want to install: undotree, multline editing 
+-- ]]
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = false
@@ -818,33 +842,3 @@ require('lazy').setup {
     },
   },
 }
-
-local keymap = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
-
--- Insert mode
-keymap('i', 'jj', '<Esc>', opts)
-
--- Normal mode
-keymap('n', '<leader>hk', ':vsplit ~/.vim/hotkeys<CR>', opts)
-keymap('n', '<leader><leader>u', ':UndotreeToggle<CR>', opts)
-keymap('n', 'gt', ':tabnext<CR>', opts)
-keymap('n', 'gT', ':tabprev<CR>', opts)
-keymap('n', 't', ':tabnew<CR>', opts)
-
--- keymap('n', 'K', ':m .-2<CR>==', opts)
--- keymap('n', 'J', ':m .+1<CR>==', opts)
-
--- Visual mode
-keymap('v', 'K', ":m '<-2<CR>gv=gv", opts)
-keymap('v', 'J', ":m '>+1<CR>gv=gv", opts)
-
--- Command mode mapping
-keymap('n', ';', ':', { noremap = true })
-keymap('v', ';', ':', { noremap = true })
-
---[[
--- things I wanna change:
--- 1- the colorscheme, I want to make it like primeagen's (rose-pine, he seems to make it look the way it is by using it with termux
--- 2- undotree
--- ]]
