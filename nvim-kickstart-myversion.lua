@@ -18,6 +18,7 @@ keymap('v', 'K', ":m '<-2<CR>gv=gv", opts)
 keymap('v', 'J', ":m '>+1<CR>gv=gv", opts)
 keymap('n', ';', ':', { noremap = true })
 keymap('v', ';', ':', { noremap = true })
+keymap('n', 'Y', 'y$', opts)
 
 --[[
 -- things I wanna change:
@@ -839,6 +840,16 @@ require('lazy').setup {
       start = '🚀',
       task = '📌',
       lazy = '💤 ',
+    },
+  },
+  -- my added plugins
+  { 'mg979/vim-visual-multi' },
+  {
+    'jiaoshijie/undotree',
+    dependencies = 'nvim-lua/plenary.nvim',
+    config = true,
+    keys = { -- load the plugin only when using it's keybinding:
+      { '<leader>u', "<cmd>lua require('undotree').toggle()<cr>" },
     },
   },
 }
